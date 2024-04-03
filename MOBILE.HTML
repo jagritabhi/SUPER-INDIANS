@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CLOTH's Auction</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            background-image: url(https://tse2.mm.bing.net/th?id=OIP.ybZ-56ADsD2Dxyz4mD6lEAHaE8&pid=Api&P=0&h=180);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .card {
+            margin: 10px;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card-img-top {
+            height: 325px;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 15px;
+            background-color: #fff;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #00b32d;
+            border-color: #0056b3;
+        }
+        .spinner-border {
+            margin-top: 20px;
+        }
+        .container h1{
+            background-color: rgb(240, 127, 96);
+        }
+    </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>WELCOME TO CLOTH's AUCTION</h1>
+
+    <div class="row" id="auction-items">
+        <!-- Medical items with buttons and spinners will be displayed here -->
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const auctionItemsContainer = document.getElementById("auction-items");
+
+        // Predefined medical items
+        const medicalItems = [
+            { name: "MOTOROLA Edge 40",        image: "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/b/q/6/edge-40-pay40028in-motorola-original-imagpqzdnhrgvhj7.jpeg?q=70" },
+            { name: "Nothing Phone (2) ",        image: "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/u/m/b/-original-imagrdefbw6bhbjr.jpeg?q=70" },
+            { name: "SAMSUNG Galaxy S23 Ultra 5G",        image: "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/2/s/7/-original-imagmg6gktts6sfy.jpeg?q=70" },
+            { name: "realme 11 Pro 5G",        image: "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/l/8/d/-original-imagqadpnygfnn2v.jpeg?q=70" },
+            { name: "REDMI Note 12 Pro 5G",        image: "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/r/o/o/-original-imaghkvuzxkcna4n.jpeg?q=70" },
+            { name: "OPPO Reno10 5G",        image: "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/3/u/w/-original-imagtcrvzrqnnxpc.jpeg?q=70" },
+            { name: "APPLE iPhone 12",        image: "https://rukminim2.flixcart.com/image/416/416/kg8avm80/mobile/r/h/z/apple-iphone-12-dummyapplefsn-original-imafwg8duby8qbn4.jpeg?q=70" },
+            { name: "SAMSUNG Galaxy F34 5G",        image: "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/r/k/x/-original-imagtrrqkxprtd4n.jpeg?q=70" },
+            { name: "vivo Y200 5G",        image: "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/u/n/p/-original-imagugptgsfbxauz.jpeg?q=70" },
+            { name: "APPLE iPhone 14",        image: "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/3/5/l/-original-imaghx9qmgqsk9s4.jpeg?q=70" },
+            { name: "Google Pixel 8 Pro",        image: "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/h/x/j/-original-imagtwh5euxntumw.jpeg?q=70" },
+            { name: "OPPO Find N3 Flip",        image: "https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/f/s/t/-original-imagu8h9bqnjsdnz.jpeg?q=70" },
+
+            
+
+
+
+            // Add more medical items as needed
+        ];
+
+        // Create cards with buttons and spinners for each medical item
+        medicalItems.forEach(item => {
+            const medicalCard = document.createElement("div");
+            medicalCard.classList.add("card");
+            medicalCard.innerHTML = `
+                <img src="${item.image}" class="card-img-top" alt="${item.name}">
+                <div class="card-body">
+                    <h5 class="card-title">${item.name}</h5>
+                    <button class="btn btn-primary" onclick="placeBid('${item.name}')">Place Bid</button>
+                    <div class="spinner-border text-primary" role="status" style="display: none;">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            `;
+
+            auctionItemsContainer.appendChild(medicalCard);
+        });
+    });
+
+    function placeBid(itemName) {
+        const cards = document.getElementsByClassName("card");
+        for (let i = 0; i < cards.length; i++) {
+            if (cards[i].querySelector('.card-title').textContent === itemName) {
+                const spinner = cards[i].querySelector('.spinner-border');
+                spinner.style.display = "inline-block";
+
+                // Simulating a bid placement process with a delay
+                setTimeout(function() {
+                    spinner.style.display = "none";
+                    alert(`You placed a bid for ${itemName} successfully!`);
+                }, 2000); // Simulating 2 seconds delay for the bid process (adjust as needed)
+                break;
+            }
+        }
+    }
+  </script>
+</body>
+</html>
