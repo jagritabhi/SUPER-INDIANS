@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Health Auction</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    header {
+    background-color: #00e63d;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+  </style>
+
+</head>
+<body>
+<header>
+    <h1>
+        HEALTH
+    </h1>
+</header>
+<div class="container mt-4">
+  <h2>Health Auction</h2>
+  
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <img src="Accumass.jpg" class="card-img-top" alt="Health Product 1">
+        <div class="card-body">
+          <h5 class="card-title">Health Product 1</h5>
+          <p class="card-text">Description:Accumass is a natural weight gainer product with goodness of 18 herbs. The herbs in Accumass helps to stabilize the hyperactivity of metabolism and to take up more macronutrients in the body that helps in increasing the bone mass and muscle mass that ultimately increases body weight.</p>
+          <button class="btn btn-warning btn-block place-bid-btn">Place Bid</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <img src="cp.jpg" class="card-img-top" alt="Health Product 2">
+        <div class="card-body">
+          <h5 class="card-title">Health Product 2</h5>
+          <p class="card-text">Description:Complan is a nutrition & health drink for kids with clinically proven formula that supports concentration & memory & delivers 2X faster growth
+            Contains 100% milk protein which is a high quality protein. Use it to make healthy protein drink for kids
+            Contains 34 vital nutrients
+            Nutrients like Iodine, Iron & Vitamin B12 helps in brain development & its functioning.
+            Nutrients like Vitamin A, E & C supports immune function.
+            .</p>
+          <button class="btn btn-warning btn-block place-bid-btn">Place Bid</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="pd.jpg" class="card-img-top" alt="Health Product 3">
+          <div class="card-body">
+            <h5 class="card-title">Health Product 3</h5>
+            <p class="card-text">Description:Pediasure provides complete and balanced nutrition
+              Clinically proven to help increase height and weight for those who consume regularly
+              Helps strengthen natural immunity
+              Supports brain development
+              form_factor:powder
+              material_features:vegetarian</p>
+            <button class="btn btn-warning btn-block place-bid-btn">Place Bid</button>
+          </div>
+        </div>
+      </div>
+
+    <!-- Add more health products as needed -->
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+document.querySelectorAll('.place-bid-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    if (confirm('Do you want to place a bid?')) {
+      alert('Your bid has been placed!');
+    }
+  });
+});
+
+</script>
+
+</body>
+</html>
