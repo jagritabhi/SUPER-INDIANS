@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CLOTH's Auction</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            background-image: url(https://tse2.mm.bing.net/th?id=OIP.ybZ-56ADsD2Dxyz4mD6lEAHaE8&pid=Api&P=0&h=180);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .card {
+            margin: 10px;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card-img-top {
+            height: 350px;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 15px;
+            background-color: #fff;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #00b32d;
+            border-color: #0056b3;
+        }
+        .spinner-border {
+            margin-top: 20px;
+        }
+        .container h1{
+            background-color: rgb(240, 127, 96);
+        }
+    </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>WELCOME TO CLOTH's AUCTION</h1>
+
+    <div class="row" id="auction-items">
+        <!-- Medical items with buttons and spinners will be displayed here -->
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const auctionItemsContainer = document.getElementById("auction-items");
+
+        // Predefined medical items
+        const medicalItems = [
+            { name: "Women Fit and Flare Blue, White Dress",        image: "https://rukminim2.flixcart.com/image/612/612/xif0q/dress/3/q/t/l-htdrss7133-honky-tonky-original-imagszfhfghhs2rp.jpeg?q=70" },
+            { name: "Printed Banarasi Jacquard Saree  (Red)",           image: "https://rukminim2.flixcart.com/image/832/832/l27wtjk0/sari/f/w/2/free-daimond-saree-big-fashion-unstitched-original-imagdmy5zqgujhxh.jpeg?q=70" },
+            { name: "Women Printed Viscose Rayon Flared Kurta  (Blue)",         image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/r/u/u/5xl-lomolzone-zonpik-original-imagn3gmdunqvnxe.jpeg?q=70" },
+            { name: "Women Printed Viscose Rayon Anarkali Kurta  (Blue, Grey)",           image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/8/p/g/xl-greyblue-ganeshjisk-5xl-seakart-original-imaghkab3tezksjy.jpeg?q=70" },
+            { name: "Self Design Banarasi Cotton Silk, Pure Cotton Saree",          image: "https://rukminim2.flixcart.com/image/832/832/l23mhzk0/sari/d/a/3/free-wedding-festive-saree-s-more-mahija-saree-unstitched-original-imagdgzeyhefarcs.jpeg?q=70" },
+            { name: "Women Cotton Rayon Kurta Salwar Dupatta Set",           image: "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/g/u/v/s-b1-vikita-enterprise-original-imagvxce3yzzz3xh.jpeg?q=70" },
+            { name: "Women Velvet Kurta Pant Dupatta Set",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/k/y/5/xxl-91kbd1001-samah-original-imaguf3fqh7fueju.jpeg?q=70" },
+            { name: "Women Viscose Rayon Kurta Pant Dupatta Set",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/0/h/z/xl-green-ghanti-gvs-shoppe-original-imaghj34dxaubfhy.jpeg?q=70" },
+            { name: "Men Striped, Solid Round Neck Polyester Light Green T-Shirt",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/t/n/a/l-men-sports-striped-grey-cqs-fashion-original-imagqgfv6xb89rgn.jpeg?q=70" },
+            { name: "Men Regular Fit Solid Spread Collar Casual Shirt",       image: "https://rukminim2.flixcart.com/image/832/832/kzn17680/shirt/0/q/o/l-logo-shirt-infinity-choice-original-imagbhwczbphzk5f.jpeg?q=70" },
+            { name: "Polyester Blend Checkered Coat For Men",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/coat/e/k/5/m-klng-015-r-l-bk-killer-original-imagmg32ef7xzegb.jpeg?q=70" },
+            { name: "Solid Cotton Blend Straight Kurta ",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/t/l/y/xl-nnew-p2-grey-103-kurta-maroon-freluro-original-imagppdr4ecszj5j.jpeg?q=70" },
+            { name: "Solid Viscose Rayon Straight Kurta",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/v/q/u/l-18635684-house-of-pataudi-original-imagq4ywnvkgaajt.jpeg?q=70" },
+            { name: "Printed Cotton Blend Straight Kurta",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/y/x/p/m-kcku-only-kurta-print-orfi-fubar-original-imaggtqrdbhhcfas.jpeg?q=70" },
+            { name: "Solid Cotton Blend A-line Kurta",       image: "https://rukminim2.flixcart.com/image/832/832/l4ei1e80/kurta/y/i/z/xl-gdm04-dimmy-original-imagfb4e2kydhfmj.jpeg?q=70" },
+            { name: " Solid Cotton Blend Straight Kurta",       image: "https://rukminim2.flixcart.com/image/416/416/xif0q/kurta/t/v/h/l-kurta-combo-01-golazo-original-imaguxbz4vjajp5u.jpeg?q=70" },
+            { name: "Girls Festive & Party Kurta, Pyjama & Dupatta Set ",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-ethnic-set/u/y/b/5-6-years-chlid-raithan-original-imagqe22r68phyfa.jpeg?q=70" },
+            { name: " Party Kurta and Dhoti Pant Set ",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-ethnic-set/y/o/l/7-8-years-7001-bacchagang-original-imaggzmafh3wf9uc.jpeg?q=70" },
+            { name: " Casual Kurta and Pallazo Set",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-ethnic-set/c/d/t/4-5-years-f-f-new-nyra-minakshi-plazzo-albaydar-fashion-original-imagq59vgmnwwhhk.jpeg?q=70" },
+            { name: "Wedding Sherwani and Churidar Set",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-ethnic-set/s/g/i/2-3-years-alam-black-neelkanth-original-imagm79cpebysjm7.jpeg?q=70" },
+            { name: "Biba",        image: "biba.jpg" },
+            { name: "purple",        image: "women wear.jpg" },
+            { name: "pink beauty",        image: "pink.jpg" },
+            { name: "monte carlo",        image: "mc.jpg" },
+            { name: "green soul",        image: "green soul.jpg" },
+            { name: "veero moda",        image: "vero moda.jpg" },
+            { name: "US polo",        image: "us polo clothe.jpg" },
+            { name: "biba",        image: "bls.jpg" },
+            { name: "biba bride",        image: "biba bride.jpg" },
+            { name: "Women Fit and Flare Blue, White Dress",        image: "https://rukminim2.flixcart.com/image/612/612/xif0q/dress/3/q/t/l-htdrss7133-honky-tonky-original-imagszfhfghhs2rp.jpeg?q=70" },
+            { name: "Printed Banarasi Jacquard Saree  (Red)",           image: "https://rukminim2.flixcart.com/image/832/832/l27wtjk0/sari/f/w/2/free-daimond-saree-big-fashion-unstitched-original-imagdmy5zqgujhxh.jpeg?q=70" },
+            { name: "Women Printed Viscose Rayon Flared Kurta  (Blue)",         image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/r/u/u/5xl-lomolzone-zonpik-original-imagn3gmdunqvnxe.jpeg?q=70" },
+            { name: "Women Printed Viscose Rayon Anarkali Kurta  (Blue, Grey)",           image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/8/p/g/xl-greyblue-ganeshjisk-5xl-seakart-original-imaghkab3tezksjy.jpeg?q=70" },
+            { name: "Self Design Banarasi Cotton Silk, Pure Cotton Saree",          image: "https://rukminim2.flixcart.com/image/832/832/l23mhzk0/sari/d/a/3/free-wedding-festive-saree-s-more-mahija-saree-unstitched-original-imagdgzeyhefarcs.jpeg?q=70" },
+            { name: "Women Cotton Rayon Kurta Salwar Dupatta Set",           image: "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/g/u/v/s-b1-vikita-enterprise-original-imagvxce3yzzz3xh.jpeg?q=70" },
+            { name: "Women Velvet Kurta Pant Dupatta Set",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/k/y/5/xxl-91kbd1001-samah-original-imaguf3fqh7fueju.jpeg?q=70" },
+            { name: "Women Viscose Rayon Kurta Pant Dupatta Set",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/0/h/z/xl-green-ghanti-gvs-shoppe-original-imaghj34dxaubfhy.jpeg?q=70" },
+            { name: "Men Striped, Solid Round Neck Polyester Light Green T-Shirt",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/t/n/a/l-men-sports-striped-grey-cqs-fashion-original-imagqgfv6xb89rgn.jpeg?q=70" },
+            { name: "Men Regular Fit Solid Spread Collar Casual Shirt",       image: "https://rukminim2.flixcart.com/image/832/832/kzn17680/shirt/0/q/o/l-logo-shirt-infinity-choice-original-imagbhwczbphzk5f.jpeg?q=70" },
+            { name: "Polyester Blend Checkered Coat For Men",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/coat/e/k/5/m-klng-015-r-l-bk-killer-original-imagmg32ef7xzegb.jpeg?q=70" },
+            { name: "Solid Cotton Blend Straight Kurta ",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/t/l/y/xl-nnew-p2-grey-103-kurta-maroon-freluro-original-imagppdr4ecszj5j.jpeg?q=70" },
+            { name: "Solid Viscose Rayon Straight Kurta",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/v/q/u/l-18635684-house-of-pataudi-original-imagq4ywnvkgaajt.jpeg?q=70" },
+            { name: "Printed Cotton Blend Straight Kurta",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/y/x/p/m-kcku-only-kurta-print-orfi-fubar-original-imaggtqrdbhhcfas.jpeg?q=70" },
+            { name: "Solid Cotton Blend A-line Kurta",       image: "https://rukminim2.flixcart.com/image/832/832/l4ei1e80/kurta/y/i/z/xl-gdm04-dimmy-original-imagfb4e2kydhfmj.jpeg?q=70" },
+            { name: " Solid Cotton Blend Straight Kurta",       image: "https://rukminim2.flixcart.com/image/416/416/xif0q/kurta/t/v/h/l-kurta-combo-01-golazo-original-imaguxbz4vjajp5u.jpeg?q=70" },
+            { name: "Girls Festive & Party Kurta, Pyjama & Dupatta Set ",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-ethnic-set/u/y/b/5-6-years-chlid-raithan-original-imagqe22r68phyfa.jpeg?q=70" },
+            { name: " Party Kurta and Dhoti Pant Set ",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-ethnic-set/y/o/l/7-8-years-7001-bacchagang-original-imaggzmafh3wf9uc.jpeg?q=70" },
+            { name: " Casual Kurta and Pallazo Set",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-ethnic-set/c/d/t/4-5-years-f-f-new-nyra-minakshi-plazzo-albaydar-fashion-original-imagq59vgmnwwhhk.jpeg?q=70" },
+            { name: "Wedding Sherwani and Churidar Set",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-ethnic-set/s/g/i/2-3-years-alam-black-neelkanth-original-imagm79cpebysjm7.jpeg?q=70" },
+            { name: "Biba",        image: "biba.jpg" },
+            { name: "purple",        image: "women wear.jpg" },
+            { name: "pink beauty",        image: "pink.jpg" },
+            { name: "monte carlo",        image: "mc.jpg" },
+            { name: "green soul",        image: "green soul.jpg" },
+            { name: "veero moda",        image: "vero moda.jpg" },
+            { name: "US polo",        image: "us polo clothe.jpg" },
+            { name: "biba",        image: "bls.jpg" },
+            { name: "biba bride",        image: "biba bride.jpg" },
+            { name: "Women Fit and Flare Blue, White Dress",        image: "https://rukminim2.flixcart.com/image/612/612/xif0q/dress/3/q/t/l-htdrss7133-honky-tonky-original-imagszfhfghhs2rp.jpeg?q=70" },
+            { name: "Printed Banarasi Jacquard Saree  (Red)",           image: "https://rukminim2.flixcart.com/image/832/832/l27wtjk0/sari/f/w/2/free-daimond-saree-big-fashion-unstitched-original-imagdmy5zqgujhxh.jpeg?q=70" },
+            { name: "Women Printed Viscose Rayon Flared Kurta  (Blue)",         image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/r/u/u/5xl-lomolzone-zonpik-original-imagn3gmdunqvnxe.jpeg?q=70" },
+            { name: "Women Printed Viscose Rayon Anarkali Kurta  (Blue, Grey)",           image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/8/p/g/xl-greyblue-ganeshjisk-5xl-seakart-original-imaghkab3tezksjy.jpeg?q=70" },
+            { name: "Self Design Banarasi Cotton Silk, Pure Cotton Saree",          image: "https://rukminim2.flixcart.com/image/832/832/l23mhzk0/sari/d/a/3/free-wedding-festive-saree-s-more-mahija-saree-unstitched-original-imagdgzeyhefarcs.jpeg?q=70" },
+            { name: "Women Cotton Rayon Kurta Salwar Dupatta Set",           image: "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/g/u/v/s-b1-vikita-enterprise-original-imagvxce3yzzz3xh.jpeg?q=70" },
+            { name: "Women Velvet Kurta Pant Dupatta Set",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/k/y/5/xxl-91kbd1001-samah-original-imaguf3fqh7fueju.jpeg?q=70" },
+            { name: "Women Viscose Rayon Kurta Pant Dupatta Set",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/0/h/z/xl-green-ghanti-gvs-shoppe-original-imaghj34dxaubfhy.jpeg?q=70" },
+            { name: "Men Striped, Solid Round Neck Polyester Light Green T-Shirt",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/t/n/a/l-men-sports-striped-grey-cqs-fashion-original-imagqgfv6xb89rgn.jpeg?q=70" },
+            { name: "Men Regular Fit Solid Spread Collar Casual Shirt",       image: "https://rukminim2.flixcart.com/image/832/832/kzn17680/shirt/0/q/o/l-logo-shirt-infinity-choice-original-imagbhwczbphzk5f.jpeg?q=70" },
+            { name: "Polyester Blend Checkered Coat For Men",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/coat/e/k/5/m-klng-015-r-l-bk-killer-original-imagmg32ef7xzegb.jpeg?q=70" },
+            { name: "Solid Cotton Blend Straight Kurta ",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/t/l/y/xl-nnew-p2-grey-103-kurta-maroon-freluro-original-imagppdr4ecszj5j.jpeg?q=70" },
+            { name: "Solid Viscose Rayon Straight Kurta",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/v/q/u/l-18635684-house-of-pataudi-original-imagq4ywnvkgaajt.jpeg?q=70" },
+            { name: "Printed Cotton Blend Straight Kurta",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kurta/y/x/p/m-kcku-only-kurta-print-orfi-fubar-original-imaggtqrdbhhcfas.jpeg?q=70" },
+            { name: "Solid Cotton Blend A-line Kurta",       image: "https://rukminim2.flixcart.com/image/832/832/l4ei1e80/kurta/y/i/z/xl-gdm04-dimmy-original-imagfb4e2kydhfmj.jpeg?q=70" },
+            { name: " Solid Cotton Blend Straight Kurta",       image: "https://rukminim2.flixcart.com/image/416/416/xif0q/kurta/t/v/h/l-kurta-combo-01-golazo-original-imaguxbz4vjajp5u.jpeg?q=70" },
+            { name: "Girls Festive & Party Kurta, Pyjama & Dupatta Set ",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-ethnic-set/u/y/b/5-6-years-chlid-raithan-original-imagqe22r68phyfa.jpeg?q=70" },
+            { name: " Party Kurta and Dhoti Pant Set ",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-ethnic-set/y/o/l/7-8-years-7001-bacchagang-original-imaggzmafh3wf9uc.jpeg?q=70" },
+            { name: " Casual Kurta and Pallazo Set",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-ethnic-set/c/d/t/4-5-years-f-f-new-nyra-minakshi-plazzo-albaydar-fashion-original-imagq59vgmnwwhhk.jpeg?q=70" },
+            { name: "Wedding Sherwani and Churidar Set",       image: "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-ethnic-set/s/g/i/2-3-years-alam-black-neelkanth-original-imagm79cpebysjm7.jpeg?q=70" },
+            { name: "Biba",        image: "biba.jpg" },
+            { name: "purple",        image: "women wear.jpg" },
+            { name: "pink beauty",        image: "pink.jpg" },
+            { name: "monte carlo",        image: "mc.jpg" },
+            { name: "green soul",        image: "green soul.jpg" },
+            { name: "veero moda",        image: "vero moda.jpg" },
+            { name: "US polo",        image: "us polo clothe.jpg" },
+            { name: "biba",        image: "bls.jpg" },
+            { name: "biba bride",        image: "biba bride.jpg" },
+            { name: "lingerie",        image: "lingerie.jpg" },
+
+
+
+
+
+
+
+
+           
+            
+
+
+
+            // Add more medical items as needed
+        ];
+
+        // Create cards with buttons and spinners for each medical item
+        medicalItems.forEach(item => {
+            const medicalCard = document.createElement("div");
+            medicalCard.classList.add("card");
+            medicalCard.innerHTML = `
+                <img src="${item.image}" class="card-img-top" alt="${item.name}">
+                <div class="card-body">
+                    <h5 class="card-title">${item.name}</h5>
+                    <button class="btn btn-primary" onclick="placeBid('${item.name}')">Place Bid</button>
+                    <div class="spinner-border text-primary" role="status" style="display: none;">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            `;
+
+            auctionItemsContainer.appendChild(medicalCard);
+        });
+    });
+
+    function placeBid(itemName) {
+        const cards = document.getElementsByClassName("card");
+        for (let i = 0; i < cards.length; i++) {
+            if (cards[i].querySelector('.card-title').textContent === itemName) {
+                const spinner = cards[i].querySelector('.spinner-border');
+                spinner.style.display = "inline-block";
+
+                // Simulating a bid placement process with a delay
+                setTimeout(function() {
+                    spinner.style.display = "none";
+                    alert(`You placed a bid for ${itemName} successfully!`);
+                }, 2000); // Simulating 2 seconds delay for the bid process (adjust as needed)
+                break;
+            }
+        }
+    }
+  </script>
+</body>
+</html>

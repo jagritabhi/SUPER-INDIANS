@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Auction Platform</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles for bid modal and cart */
+    .bid-button {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bid-button:hover .spinner {
+      opacity: 1;
+    }
+
+    .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .countdown {
+      text-align: center;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    /* Cart styles */
+    #cart {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 250px;
+      background-color: #f9f9f9;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    #cart h2 {
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+
+    #cartItems {
+      list-style: none;
+      padding: 0;
+    }
+
+    #cartItems li {
+      margin-bottom: 5px;
+    }
+
+    /* Product grid */
+    .products-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .product-section {
+      width: 30%;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .product-section img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-content {
+      margin: 10% auto;
+      width: 60%;
+      max-width: 800px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    .modal-content p {
+      text-align: center;
+    }
+
+    .close {
+      color: #fff;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .back-to-products {
+      margin-top: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Medical Auction Platform</h1>
+
+    <!-- Cart Section -->
+    <div id="cart">
+      <h2>Your Cart</h2>
+      <ul id="cartItems"></ul>
+    </div>
+
+    <!-- Products -->
+    <div class="products-grid">
+      <!-- Dynamically generated product sections will be placed here -->
+      <!-- Example product sections (replace with dynamic content) -->
+      <div class="product-section" onclick="openModal('Lizol.jpg', 'Description for Product 1')">
+        <img src="product1.jpg" alt="Product 1">
+        <h3>Product 1</h3>
+      </div>
+      <div class="product-section" onclick="openModal('product2.jpg', 'Description for Product 2')">
+        <img src="product2.jpg" alt="Product 2">
+        <h3>Product 2</h3>
+      </div>
+      <div class="product-section" onclick="openModal('product3.jpg', 'Description for Product 3')">
+        <img src="product3.jpg" alt="Product 3">
+        <h3>Product 3</h3>
+      </div>
+      <!-- HTML for animated image (just an example) -->
+<img src="category1.gif" class="category-image" alt="Electronics" data-category="electronics">
+<img src="category2.gif" class="category-image" alt="Clothing" data-category="clothing">
+<!-- Add more images for other categories -->
+
+      <!-- Add more product sections here as needed -->
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" src="" alt="Modal Image">
+        <div id="modalDescriptionBox"></div>
+        <div class="back-to-products">
+          <button class="btn btn-warning" onclick="goToProductSection()">Go back to Products</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // Function to scroll to the product section when navigating back from the modal
+    function goToProductSection() {
+      const productsSection = document.querySelector('.products-grid');
+      productsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ... (Your other JavaScript code for modals, cart functionality, etc.) ...
+    // JavaScript to handle click event on category images
+document.addEventListener('DOMContentLoaded', function() {
+    const categoryImages = document.querySelectorAll('.category-image');
+    
+    categoryImages.forEach(image => {
+        image.addEventListener('click', function() {
+            const category = this.getAttribute('data-category');
+            // Redirect to the category page based on the clicked category
+            redirectToCategory(category);
+        });
+    });
+
+    // Function to redirect to the category page
+    function redirectToCategory(category) {
+        // Here, you can determine the URL structure based on the category
+        let categoryURL = ''; // Replace this with the actual URL structure
+        if (category === 'electronics') {
+            categoryURL = '/md.html'; // Replace with the URL for electronics category
+        } else if (category === 'clothing') {
+            categoryURL = '/ashion.html'; // Replace with the URL for clothing category
+        }
+        // Redirect to the category URL
+        window.location.href = categoryURL;
+    }
+});
+
+  </script>
+</body>
+
+</html>
