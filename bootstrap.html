@@ -7,7 +7,11 @@
   
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
-/* Updated CSS for Aesthetic Look */
+/* Global Styles */
+
+body {
+  font-family: Arial, sans-serif; /* Use a more common font */
+}
 
 /* Navbar Styling */
 .navbar-custom {
@@ -76,7 +80,7 @@
 /* Homepage Content Styling */
 .homepage {
   background-color: #f8f9fa; /* Light gray background */
-  height: 100vh; 
+  min-height: calc(100vh - 56px); /* Adjusted to accommodate navbar */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,7 +90,6 @@
 
 .homepage-content {
   color: #333; 
-  font-family: Arial, sans-serif; /* Use a more common font */
 }
 
 /* Image Container Styling */
@@ -141,7 +144,13 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
-
+/* Footer Styling */
+footer {
+  background-color: #2c3e50; /* Darker shade of blue */
+  color: #ecf0f1; /* Light gray */
+  text-align: center;
+  padding: 20px 0;
+}
 
   </style>
 </head>
