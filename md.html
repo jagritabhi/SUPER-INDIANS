@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Auction Platform</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles for bid modal */
+    body {
+      background-color:beige;
+
+        font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+    .bid-button {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bid-button:hover .spinner {
+      opacity: 1;
+    }
+
+    .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .countdown {
+      text-align: center;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    /* Styles for modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-content {
+      margin: 10% auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 60%;
+      max-width: 800px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-content img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      display: block;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-content p {
+      text-align: center;
+    }
+
+    .close {
+      color: #000;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Set width for product images */
+    .product-img {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+    }
+
+    /* Separate product sections */
+    .product-section {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .product-section h3,
+    .product-section p {
+      margin-bottom: 10px;
+    }
+    .container h1{
+        margin:auto;
+        text-align: center;
+        background-color:rgb(200, 200, 177) ;
+
+      }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Medical Auction Platform</h1>
+
+    <!-- Products -->
+    <div id="products" class="row">
+      <!-- Dynamically generated product sections will be placed here -->
+    </div>
+
+    <!-- Bid Modal -->
+    <div class="modal fade" id="bidModal" tabindex="-1" role="dialog" aria-labelledby="bidModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bidModalLabel">Place Your Bid</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Please enter your bid value:</p>
+            <input type="number" class="form-control" id="bidValue">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-warning" onclick="confirmBid()">Confirm Bid</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="countdown">
+      <p>Time Remaining in Auction: <span id="countdownTimer">00:00:00</span></p>
+    </div>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" src="" alt="Modal Image">
+        <div id="modalDescriptionBox"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    function startCountdown(duration, display) {
+      let timer = duration,
+        hours, minutes, seconds;
+      setInterval(function () {
+        hours = parseInt(timer / 3600, 10);
+        minutes = parseInt((timer % 3600) / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = hours + ":" + minutes + ":" + seconds;
+
+        if (--timer < 0) {
+          timer = duration;
+        }
+      }, 1000);
+    }
+
+    window.onload = function () {
+      const countdownTime = 60 * 60 * 3; // 3 hours countdown
+      const display = document.querySelector('#countdownTimer');
+      startCountdown(countdownTime, display);
+
+      // Example products data (you can replace this with your data from a database or API)
+      const productsData = [
+        { name: "Manforce Condoms", description: "Manforce Ultra Feel Super Thin Bubblegum Flavoured Condoms, designed to offer a natural feel for your passionate lovemaking moments", image: "manforce.jpg" },
+        { name: "Control D", description: "To make inhalation easier for the entire family, the device comes with two different sized masks (kid and adult size).So,make inhlalation easy", image: "control d.jpg" },
+        { name: "Nashaband powder", description: "Nasha Band is an AYUSH approved Ayurvedic product comprising of natural extracts to provide freedom from addiction without any side effect.", image: "Nashaband.jpg" },
+
+        
+      
+        { name: "Dettol", description: "Protect from 99.9% Germs. Recommended by Indian Medical Association (IMA). Be safe and hygenic and germ free homes. So , go for Dettol now ", image: "dettol.jpg" },
+        { name: "Nashaband powder", description: "Nasha Band is an AYUSH approved Ayurvedic product comprising of natural extracts to provide freedom from addiction without any side effect. So,let,s make drug free World", image: "Nashaband.jpg" },
+        { name: "Medtec", description: "Get the best quality nebulisers from Medtech - the largest nebuliser manufacturer in India since 20 years.Patemteddesign with slim body and easy handling", image: "medtec.jpg" },
+        
+        
+        
+        { name: "Knee Cap", description: " Dr. Ortho Knee Cap has been created to be your partner in all of your daily activities, whether they be sports like basketball, badminton, or kabaddi, office jobs where you must constantly move about, housework where you must walk continuously, or exercises like running, cycling, or jogging. Throughout the use of this kneecap, it will offer maximum compression and support.", image: "knee cap.jpg" },
+        { name: "Neck Supporter", description: "This neck support can be used for acute neck pain, cervical spondylosis, cervical Disc Herniation, Excessive strain on the neck muscles, Whiplash injuries, Cervical disc injury, Correct neck Posture and other conditions causing pain and discomfort in the neck, and requiring mild support. Neck Problem best instrumen it is physio' first choice", image: "necksupport.jpg" },
+        { name: "Shoulder + neck supporter", description: "Are you suffering from neck pain? Prolonged bowing your head, sit still for a long time, improper sitting posture, stiff neck will cause your neck pain. You need a simple and effective physical solution, associated with consistent use, to help relieve neck pain and pressure, sore muscles, TMJ and tension headache relief. Relief neck pain in just 10 minutes, Why live with pain then?when you have a soution", image: "kosto.jpg" },
+
+
+
+        { name: "Eyedrop machine", description: "Suitable for Childrens and Pregnant or Lactating Woman. Side effect free Drops protet you eyes from suffocation and irritation. Lets finish the word eye pain now. just in few minutes ", image: "eyedrop.jpg" },
+        { name: "Lizol", description: "Lizol ne kiya kammaal Kiya sb kuch clean Vo bhi just in 2 min utes", image: "Lizol.jpg" },
+        { name: "Himalya Capsules", description: "Himalaya PartySmart is made of power herbs that help prevent hangovers. Grapes - Protects gastric mucosa from oxidative stress and inflammation, Chicory – Protects the liver from harmful effects of alcohol-induced disturbances, Green Chiretta – Helps relieve the toxic effects of alcohol on the liver, Dates – Inhibit the oxidative damage caused by superoxide and hydroxyl radicals.", image: "hc.jpg" },
+
+
+
+        { name: "18*18 NOVA", description: "Nova medical products 18 inch x 18 inch: nova medical products ultra underpad, 18 inch x 18 inch, 1 pound.Our ultra under pads are perfect for beds, chairs and cars", image: "nova.jpg" },
+        { name: "Epsom Salt", description: "", image: "epsom.jpg" },
+        { name: "DR. Trust pulse rate", description: "The Dr Trust Professional Series Fingertip Pulse Oximeter determines your blood oxygen saturation level (SPO2), Perfusion Index, respiratory rate, pulse rate and pulse accurately.", image: "bp.jpg" },
+        
+        
+        
+        { name: "First Aid KIt", description: "Plantex first aid kit box made from GI metal with red & ivory 7-layer powder coating which is rust proof, scratch-proof & corrosion free for long life.Keep your first aid and medical supplies organized and easily accessible in this First Aid Kit and Medicine Storage Box from Plantex. Go anywhere with complete cure and full securoty for your body", image: "first aid.jpg" },
+        { name: "Medical Guardian", description: "The Mini Guardian can last up to 5 days before needing a recharge. Our personal alarms feature a water-resistant coating that is specifically designed for a bathroom call button in case of a slip or fall. Our necklace alarm is a great gift for any senior citizen. It would be a great choice", image: "mini.jpg" },
+        { name: "Savlon spray", description: "Just spray and cleanse!!!Savlon liquid disinfectant spray is a great way to get rid of dirt, dust and germs from various surfaces. It does not only disinfect the surface but also deodorizes them. It kills germs up to 99.99%. It is known to kill antibiotic-resistant germs, H1N1, norovirus and rotavirus.Savlon Antiseptic Cream is suitable for both adults and children to cleanse and reduce the risk of infection in minor wounds, cuts and grazes, and superficial burns. ", image: "savlon.jpg" },
+        
+        
+        
+        
+        { name: "Ksharsutra Thread Pack Of 100", description: "Kshara karma (application of Pratisaraneeya teekshna kshara): It is a non-surgical procedure of Ayurveda indicated for the management of hemorrhoids.", image: "kshrastru.jpg" },
+        { name: "Comforatble cushion", description: "Eases lower back pain and fatigue while sitting by allowing the spine to follow its natural curve.Includes an adjustable strap for a secure hold to the chair.Polyester/cotton fleece blend cover is removable and washable Plus, if you get the right one for your specific needs, it can do wonders for alleviating your pain.", image: "cushion.jpg" },
+        { name: "massager cups medical equipment", description: "1919 Pcs Cupping Is An Ancient Chinese Method Of Massage For Comfort.Cupping uses suction to draw blood to or away from specific areas of your body. People mostly use cupping to relieve conditions that cause pain. Some people say it also helps with chronic (ongoing) health issues.", image: "massager.jpg" },
+        
+        
+        
+        
+        { name: "Product 2", description: "Description for Product 2", image: "product2.jpg" },
+        { name: "Product 3", description: "Description for Product 3", image: "product3.jpg" },
+            
+        { name: "Product 1", description: "Description for Product 1", image: "product1.jpg" },
+        { name: "Product 2", description: "Description for Product 2", image: "product2.jpg" },
+        { name: "Product 3", description: "Description for Product 3", image: "product3.jpg" },
+            
+
+        { name: "Product 1", description: "Description for Product 1", image: "product1.jpg" },
+        { name: "Product 2", description: "Description for Product 2", image: "product2.jpg" },
+        { name: "Product 3", description: "Description for Product 3", image: "product3.jpg" },
+        // Add more products here as needed
+      ];
+
+      // Function to create product elements
+      function createProductElement(product) {
+        const productHtml = `
+          <div class="col-md-4">
+            <div class="product-section">
+              <img src="${product.image}" class="product-img" alt="${product.name}" onclick="openModal('${product.image}', '${product.description}')">
+              <h3>${product.name}</h3>
+              <p>${product.description}</p>
+              <div class="bid-button">
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#bidModal">
+                  Place Bid
+                </button>
+                <div class="spinner">
+                  <div class="spinner-border text-warning" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        return productHtml;
+      }
+
+      // Function to render products on the page
+      function renderProducts() {
+        const productsContainer = document.getElementById('products');
+        let productsHtml = '';
+        productsData.forEach(product => {
+          productsHtml += createProductElement(product);
+        });
+        productsContainer.innerHTML = productsHtml;
+      }
+
+      // Render the products on page load
+      renderProducts();
+
+      // Close modal and reset image when clicking outside the image in the modal
+      const modal = document.getElementById('myModal');
+      modal.addEventListener('click', function (event) {
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+    };
+
+    // Function to open modal and display image and description
+    function openModal(imageSrc, description) {
+      const modal = document.getElementById('myModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalDescriptionBox = document.getElementById('modalDescriptionBox');
+
+      modal.style.display = 'block';
+      modalImage.src = imageSrc;
+      modalDescriptionBox.innerHTML = `<p>${description}</p>`;
+    }
+
+    // Function to close modal and reset the image
+    function closeModal() {
+      const modal = document.getElementById('myModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalDescriptionBox = document.getElementById('modalDescriptionBox');
+
+      modal.style.display = 'none';
+      modalImage.src = ''; // Reset image source
+      modalDescriptionBox.innerHTML = ''; // Reset description
+    }
+
+    // Function to confirm bid and proceed to payment
+    function confirmBid() {
+      const bidValue = document.getElementById('bidValue').value;
+      if (bidValue.trim() === '' || isNaN(bidValue)) {
+        alert('Please enter a valid bid amount.');
+        return;
+      }
+
+      if (confirm('Are you sure you want to place a bid for ' + bidValue + '?')) {
+        // Redirect to the payment file (replace 'payment.html' with your actual payment file)
+        window.location.href = 'CHECKOUT.html';
+      }
+    }
+  </script>
+</body>
+
+</html>

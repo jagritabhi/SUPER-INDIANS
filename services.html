@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Services - Auction Website</title>
+  <style>
+    /* General styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 30px 0;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: #ddd;
+    }
+
+    main {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 100px; /* Added margin to accommodate footer */
+    }
+
+    .service-category {
+      background-color: #fff;
+      border-radius: 10px;
+      width: 60%;
+      margin-bottom: 30px;
+      padding: 30px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .service-category:hover {
+      transform: translateY(-5px);
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #333;
+      padding-bottom: 5px;
+    }
+
+    .service-description {
+      max-height: 100px;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+      color: #555;
+    }
+
+    .read-more-btn {
+      display: inline-block;
+      margin-top: 15px;
+      color: #007bff;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .read-more-btn:hover {
+      color: #0056b3;
+    }
+
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Our Services</h1>
+    <p>Welcome to our auction services. Explore the services we offer.</p>
+  </header>
+
+  <main>
+    <section class="service-category">
+      <h2>Auction Hosting</h2>
+      <div class="service-description">
+        <p>Our Auction Hosting service offers a complete platform for hosting auctions of various products and items. We provide:</p>
+        <ul>
+          <li><strong>Customizable Auction Solutions:</strong> Tailored solutions to meet your auction needs.</li>
+          <li><strong>Advanced Management Tools:</strong> Tools to manage auctions efficiently.</li>
+          <li><strong>Real-time Bidding Capabilities:</strong> Live bidding experience for participants.</li>
+          <li><strong>Secure Payment Gateways:</strong> Safe and secure payment options for successful auctions.</li>
+        </ul>
+        <p>Experience a seamless auction process with our hosting services.</p>
+        <img src="auction_hosting.jpg" alt="Auction Hosting">
+      </div>
+      <p class="read-more-btn" onclick="toggleDescription(this)">Read More</p>
+    </section>
+
+    <section class="service-category">
+      <h2>Item Valuation</h2>
+      <div class="service-description">
+        <p>Our experts help in assessing the value of your items...</p>
+        <ul>
+          <li>Accurate valuation services</li>
+          <li>Expert appraisals</li>
+          <li>Detailed valuation reports</li>
+        </ul>
+        <img src="item_valuation.jpg" alt="Item Valuation">
+      </div>
+      <p class="read-more-btn" onclick="toggleDescription(this)">Read More</p>
+    </section>
+
+    <!-- Additional services -->
+    <section class="service-category">
+      <h2>Shipping & Logistics</h2>
+      <div class="service-description">
+        <p>Efficient and reliable shipping and logistics solutions...</p>
+        <ul>
+          <li>Secure packaging and handling</li>
+          <li>Global shipping options</li>
+          <li>Tracking and delivery confirmation</li>
+        </ul>
+        <img src="shipping_logistic.jpg" alt="Shipping & Logistics">
+      </div>
+      <p class="read-more-btn" onclick="toggleDescription(this)">Read More</p>
+    </section>
+
+    <section class="service-category">
+      <h2>Bidding Assistance</h2>
+      <div class="service-description">
+        <p>Get expert assistance and guidance in bidding...</p>
+        <ul>
+          <li>Personalized bidding strategies</li>
+          <li>Real-time bidding assistance</li>
+          <li>Auction analysis and insights</li>
+        </ul>
+        <img src="bidding_assistant.jpg" alt="Bidding Assistance">
+      </div>
+      <p class="read-more-btn" onclick="toggleDescription(this)">Read More</p>
+    </section>
+
+    <section class="service-category">
+      <h2>Customer Support</h2>
+      <div class="service-description">
+        <p>Dedicated customer support for all your inquiries...</p>
+        <ul>
+          <li>24/7 support services</li>
+          <li>Issue resolution assistance</li>
+          <li>Feedback and assistance channels</li>
+        </ul>
+        <img src="customer_support.jpg" alt="Customer Support">
+      </div>
+      <p class="read-more-btn" onclick="toggleDescription(this)">Read More</p>
+    </section>
+    <!-- Additional service sections end -->
+
+  </main>
+
+  <footer>
+    <p>Contact us for more information: example@example.com</p>
+  </footer>
+
+  <script>
+    function toggleDescription(btn) {
+      var description = btn.previousElementSibling;
+      if (description.classList.contains('service-description')) {
+        if (description.style.maxHeight) {
+          description.style.maxHeight = null;
+          btn.innerHTML = 'Read More';
+        } else {
+          description.style.maxHeight = description.scrollHeight + 'px';
+          btn.innerHTML = 'Read Less';
+        }
+      }
+    }
+  </script>
+</body>
+</html>

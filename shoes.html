@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>shoes Auction</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            background-image: url(https://t3.ftcdn.net/jpg/00/86/56/12/360_F_86561234_8HJdzg2iBlPap18K38mbyetKfdw1oNrm.jpg);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .card {
+            margin: 10px;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card-img-top {
+            height: 150px;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 15px;
+            background-color: #fff;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #00b32d;
+            border-color: #0056b3;
+        }
+        .spinner-border {
+            margin-top: 20px;
+        }
+        .container h1{
+            background-color: rgb(240, 127, 96);
+        }
+        
+    </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Welcome to SHOE's Auction</h1>
+
+    <div class="row" id="auction-items">
+        <!-- shoes items with buttons and spinners will be displayed here -->
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const auctionItemsContainer = document.getElementById("auction-items");
+
+        // Predefined medical items
+        const medicalItems = [
+        { name: "Campus Men's First Running Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61SEsRufy3L._SY695_.jpg" },
+        { name: "Red Tape Casual Sneaker Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61jzjuPckrL._SY625_.jpg" },
+        { name: "White Casual Sneaker High-Neck Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71cflgAolqL._SY625_.jpg" },
+        { name: "Red Tape Black Walking Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51yfqUBUzUL._SY625_.jpg" },
+        { name: "NIKE Air Winflo 10 Running Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71FZsVVZZlL._SX625_.jpg" },
+        { name: "Nike Rep Tr Workout Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/619q+4d7RUL._SY625_.jpg" },
+        { name: "Nike Womens W Downshifter 12 Running Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71BNmk9nzzL._SX500_.jpg" },
+        { name: "Nike in-Season Tr 13Running Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61gsGD0iHrL._SY625_.jpg" },
+        { name: "Skechers Mens Bounder - Verkona Sneaker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/714-OpAheGL._SX625_.jpg" },
+        { name: "Skechers Mens-Shoe-D'LUX Walker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81gn0fAKkVL._SX500_.jpg" },
+        { name: "Skechers Mens-Shoe-D'LUX Walker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/613hgUu3UhL._SX625_.jpg" },
+        { name: "Skechers D'lux Walker Scrambler Walking Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81eK8dJYy6L._SX625_.jpg" },
+        { name: "DRUNKEN Slippers For Women", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51umfcgKCdL._SY500_.jpg" },
+        { name: "Marc Loire Women Slip On Flat Loafer Ballet", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61yszW-LqhL._SY500_.jpg" },
+        { name: "ASIAN Women's Melody-71 Casual Loafer", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61QJ3iZPNYL._SY500_.jpg" },
+        { name: "Puma Flyer Runner Engineered KnitRunning Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61kxZAdszrL._SY625_.jpg" },
+        { name: "Lino Perros Rhinestone Embellished Stilettos", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61-FkmoRcLL._SY500_.jpg" },
+        { name: "Fashionable Sandal/High Heels for Girls", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/41x4+31yiKL._SY500_.jpg" },
+        { name: "Lino Perros Backstrap Everyday Heels", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61BwGXJ6lfL._SY500_.jpg" },
+        { name: " Floral Printed Criss Cross Heel Ankle Strep Sandal", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61q6R39+Y+L._SY500_.jpg" },
+        { name: "Heel Fashion Sandals for Outdoor, Party", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/610giHURVyL._SY500_.jpg" },
+        { name: "Picktoes Trendy block heels sandal for women", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51Wbanb38DL._SY500_.jpg" },
+        { name: "Feel it Women's Fashion Sandal", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61vGA1DSKtL._SY500_.jpg" },
+        { name: "Sapatos Women Kitten Heel Bellies", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81RuzMJzQ0L._SY500_.jpg" },
+        { name: "Campus Men's First Running Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61SEsRufy3L._SY695_.jpg" },
+        { name: "Red Tape Casual Sneaker Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61jzjuPckrL._SY625_.jpg" },
+        { name: "White Casual Sneaker High-Neck Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71cflgAolqL._SY625_.jpg" },
+        { name: "Red Tape Black Walking Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51yfqUBUzUL._SY625_.jpg" },
+        { name: "NIKE Air Winflo 10 Running Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71FZsVVZZlL._SX625_.jpg" },
+        { name: "Nike Rep Tr Workout Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/619q+4d7RUL._SY625_.jpg" },
+        { name: "Nike Womens W Downshifter 12 Running Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71BNmk9nzzL._SX500_.jpg" },
+        { name: "Nike in-Season Tr 13Running Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61gsGD0iHrL._SY625_.jpg" },
+        { name: "Skechers Mens Bounder - Verkona Sneaker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/714-OpAheGL._SX625_.jpg" },
+        { name: "Skechers Mens-Shoe-D'LUX Walker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81gn0fAKkVL._SX500_.jpg" },
+        { name: "Skechers Mens-Shoe-D'LUX Walker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/613hgUu3UhL._SX625_.jpg" },
+        { name: "Skechers D'lux Walker Scrambler Walking Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81eK8dJYy6L._SX625_.jpg" },
+        { name: "DRUNKEN Slippers For Women", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51umfcgKCdL._SY500_.jpg" },
+        { name: "Marc Loire Women Slip On Flat Loafer Ballet", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61yszW-LqhL._SY500_.jpg" },
+        { name: "ASIAN Women's Melody-71 Casual Loafer", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61QJ3iZPNYL._SY500_.jpg" },
+        { name: "Puma Flyer Runner Engineered KnitRunning Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61kxZAdszrL._SY625_.jpg" },
+        { name: "Lino Perros Rhinestone Embellished Stilettos", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61-FkmoRcLL._SY500_.jpg" },
+        { name: "Fashionable Sandal/High Heels for Girls", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/41x4+31yiKL._SY500_.jpg" },
+        { name: "Lino Perros Backstrap Everyday Heels", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61BwGXJ6lfL._SY500_.jpg" },
+        { name: " Floral Printed Criss Cross Heel Ankle Strep Sandal", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61q6R39+Y+L._SY500_.jpg" },
+        { name: "Heel Fashion Sandals for Outdoor, Party", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/610giHURVyL._SY500_.jpg" },
+        { name: "Picktoes Trendy block heels sandal for women", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51Wbanb38DL._SY500_.jpg" },
+        { name: "Feel it Women's Fashion Sandal", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61vGA1DSKtL._SY500_.jpg" },
+        { name: "Sapatos Women Kitten Heel Bellies", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81RuzMJzQ0L._SY500_.jpg" },
+        { name: "Campus Men's First Running Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61SEsRufy3L._SY695_.jpg" },
+        { name: "Red Tape Casual Sneaker Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61jzjuPckrL._SY625_.jpg" },
+        { name: "White Casual Sneaker High-Neck Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71cflgAolqL._SY625_.jpg" },
+        { name: "Red Tape Black Walking Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51yfqUBUzUL._SY625_.jpg" },
+        { name: "NIKE Air Winflo 10 Running Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71FZsVVZZlL._SX625_.jpg" },
+        { name: "Nike Rep Tr Workout Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/619q+4d7RUL._SY625_.jpg" },
+        { name: "Nike Womens W Downshifter 12 Running Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71BNmk9nzzL._SX500_.jpg" },
+        { name: "Nike in-Season Tr 13Running Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61gsGD0iHrL._SY625_.jpg" },
+        { name: "Skechers Mens Bounder - Verkona Sneaker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/714-OpAheGL._SX625_.jpg" },
+        { name: "Skechers Mens-Shoe-D'LUX Walker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81gn0fAKkVL._SX500_.jpg" },
+        { name: "Skechers Mens-Shoe-D'LUX Walker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/613hgUu3UhL._SX625_.jpg" },
+        { name: "Skechers D'lux Walker Scrambler Walking Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81eK8dJYy6L._SX625_.jpg" },
+        { name: "DRUNKEN Slippers For Women", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51umfcgKCdL._SY500_.jpg" },
+        { name: "Marc Loire Women Slip On Flat Loafer Ballet", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61yszW-LqhL._SY500_.jpg" },
+        { name: "ASIAN Women's Melody-71 Casual Loafer", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61QJ3iZPNYL._SY500_.jpg" },
+        { name: "Puma Flyer Runner Engineered KnitRunning Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61kxZAdszrL._SY625_.jpg" },
+        { name: "Lino Perros Rhinestone Embellished Stilettos", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61-FkmoRcLL._SY500_.jpg" },
+        { name: "Fashionable Sandal/High Heels for Girls", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/41x4+31yiKL._SY500_.jpg" },
+        { name: "Lino Perros Backstrap Everyday Heels", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61BwGXJ6lfL._SY500_.jpg" },
+        { name: " Floral Printed Criss Cross Heel Ankle Strep Sandal", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61q6R39+Y+L._SY500_.jpg" },
+        { name: "Heel Fashion Sandals for Outdoor, Party", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/610giHURVyL._SY500_.jpg" },
+        { name: "Picktoes Trendy block heels sandal for women", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51Wbanb38DL._SY500_.jpg" },
+        { name: "Feel it Women's Fashion Sandal", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61vGA1DSKtL._SY500_.jpg" },
+        { name: "Sapatos Women Kitten Heel Bellies", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81RuzMJzQ0L._SY500_.jpg" },
+        { name: "Campus Men's First Running Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61SEsRufy3L._SY695_.jpg" },
+        { name: "Red Tape Casual Sneaker Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61jzjuPckrL._SY625_.jpg" },
+        { name: "White Casual Sneaker High-Neck Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71cflgAolqL._SY625_.jpg" },
+        { name: "Red Tape Black Walking Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51yfqUBUzUL._SY625_.jpg" },
+        { name: "NIKE Air Winflo 10 Running Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71FZsVVZZlL._SX625_.jpg" },
+        { name: "Nike Rep Tr Workout Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/619q+4d7RUL._SY625_.jpg" },
+        { name: "Nike Womens W Downshifter 12 Running Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71BNmk9nzzL._SX500_.jpg" },
+        { name: "Nike in-Season Tr 13Running Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61gsGD0iHrL._SY625_.jpg" },
+        { name: "Skechers Mens Bounder - Verkona Sneaker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/714-OpAheGL._SX625_.jpg" },
+        { name: "Skechers Mens-Shoe-D'LUX Walker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81gn0fAKkVL._SX500_.jpg" },
+        { name: "Skechers Mens-Shoe-D'LUX Walker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/613hgUu3UhL._SX625_.jpg" },
+        { name: "Skechers D'lux Walker Scrambler Walking Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81eK8dJYy6L._SX625_.jpg" },
+        { name: "DRUNKEN Slippers For Women", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51umfcgKCdL._SY500_.jpg" },
+        { name: "Marc Loire Women Slip On Flat Loafer Ballet", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61yszW-LqhL._SY500_.jpg" },
+        { name: "ASIAN Women's Melody-71 Casual Loafer", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61QJ3iZPNYL._SY500_.jpg" },
+        { name: "Puma Flyer Runner Engineered KnitRunning Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61kxZAdszrL._SY625_.jpg" },
+        { name: "Lino Perros Rhinestone Embellished Stilettos", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61-FkmoRcLL._SY500_.jpg" },
+        { name: "Fashionable Sandal/High Heels for Girls", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/41x4+31yiKL._SY500_.jpg" },
+        { name: "Lino Perros Backstrap Everyday Heels", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61BwGXJ6lfL._SY500_.jpg" },
+        { name: " Floral Printed Criss Cross Heel Ankle Strep Sandal", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61q6R39+Y+L._SY500_.jpg" },
+        { name: "Heel Fashion Sandals for Outdoor, Party", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/610giHURVyL._SY500_.jpg" },
+        { name: "Picktoes Trendy block heels sandal for women", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51Wbanb38DL._SY500_.jpg" },
+        { name: "Feel it Women's Fashion Sandal", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61vGA1DSKtL._SY500_.jpg" },
+        { name: "Sapatos Women Kitten Heel Bellies", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81RuzMJzQ0L._SY500_.jpg" },
+        { name: "Campus Men's First Running Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61SEsRufy3L._SY695_.jpg" },
+        { name: "Red Tape Casual Sneaker Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61jzjuPckrL._SY625_.jpg" },
+        { name: "White Casual Sneaker High-Neck Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71cflgAolqL._SY625_.jpg" },
+        { name: "Red Tape Black Walking Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51yfqUBUzUL._SY625_.jpg" },
+        { name: "NIKE Air Winflo 10 Running Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71FZsVVZZlL._SX625_.jpg" },
+        { name: "Nike Rep Tr Workout Shoes", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/619q+4d7RUL._SY625_.jpg" },
+        { name: "Nike Womens W Downshifter 12 Running Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71BNmk9nzzL._SX500_.jpg" },
+        { name: "Nike in-Season Tr 13Running Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61gsGD0iHrL._SY625_.jpg" },
+        { name: "Skechers Mens Bounder - Verkona Sneaker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/714-OpAheGL._SX625_.jpg" },
+        { name: "Skechers Mens-Shoe-D'LUX Walker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81gn0fAKkVL._SX500_.jpg" },
+        { name: "Skechers Mens-Shoe-D'LUX Walker", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/613hgUu3UhL._SX625_.jpg" },
+        { name: "Skechers D'lux Walker Scrambler Walking Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81eK8dJYy6L._SX625_.jpg" },
+        { name: "DRUNKEN Slippers For Women", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51umfcgKCdL._SY500_.jpg" },
+        { name: "Marc Loire Women Slip On Flat Loafer Ballet", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61yszW-LqhL._SY500_.jpg" },
+        { name: "ASIAN Women's Melody-71 Casual Loafer", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61QJ3iZPNYL._SY500_.jpg" },
+        { name: "Puma Flyer Runner Engineered KnitRunning Shoe", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61kxZAdszrL._SY625_.jpg" },
+        { name: "Lino Perros Rhinestone Embellished Stilettos", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61-FkmoRcLL._SY500_.jpg" },
+        { name: "Fashionable Sandal/High Heels for Girls", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/41x4+31yiKL._SY500_.jpg" },
+        { name: "Lino Perros Backstrap Everyday Heels", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61BwGXJ6lfL._SY500_.jpg" },
+        { name: " Floral Printed Criss Cross Heel Ankle Strep Sandal", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61q6R39+Y+L._SY500_.jpg" },
+        { name: "Heel Fashion Sandals for Outdoor, Party", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/610giHURVyL._SY500_.jpg" },
+        { name: "Picktoes Trendy block heels sandal for women", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51Wbanb38DL._SY500_.jpg" },
+        { name: "Feel it Women's Fashion Sandal", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61vGA1DSKtL._SY500_.jpg" },
+        { name: "Sapatos Women Kitten Heel Bellies", image: "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/81RuzMJzQ0L._SY500_.jpg" },
+            
+
+            // Add more medical items as needed
+        ];
+
+        // Create cards with buttons and spinners for each shoes item
+        medicalItems.forEach(item => {
+            const medicalCard = document.createElement("div");
+            medicalCard.classList.add("card");
+            medicalCard.innerHTML = `
+                <img src="${item.image}" class="card-img-top" alt="${item.name}">
+                <div class="card-body">
+                    <h5 class="card-title">${item.name}</h5>
+                    <button class="btn btn-primary" onclick="placeBid('${item.name}')">Place Bid</button>
+                    <div class="spinner-border text-primary" role="status" style="display: none;">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            `;
+
+            auctionItemsContainer.appendChild(medicalCard);
+        });
+    });
+
+    function placeBid(itemName) {
+        const cards = document.getElementsByClassName("card");
+        for (let i = 0; i < cards.length; i++) {
+            if (cards[i].querySelector('.card-title').textContent === itemName) {
+                const spinner = cards[i].querySelector('.spinner-border');
+                spinner.style.display = "inline-block";
+
+                // Simulating a bid placement process with a delay
+                setTimeout(function() {
+                    spinner.style.display = "none";
+                    alert(`You placed a bid for ${itemName} successfully!`);
+                }, 2000); // Simulating 2 seconds delay for the bid process (adjust as needed)
+                break;
+            }
+        }
+    }
+  </script>
+</body>
+</html>

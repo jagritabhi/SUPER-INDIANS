@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SPORTS Auction</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            background-image: url(https://1.bp.blogspot.com/_RphxnciltFY/THKoXMkjTLI/AAAAAAAAAMk/tOgMgW1zyko/s1600/Frame+cantik+02.jpg);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .card {
+            margin: 10px;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card-img-top {
+            height: 150px;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 15px;
+            background-color: #fff;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #00b32d;
+            border-color: #0056b3;
+        }
+        .spinner-border {
+            margin-top: 20px;
+        }
+        .container h1{
+            background-color: rgb(240, 127, 96);
+        }
+    </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>WELCOME TO SPORT's PRODUCTS AUCTION</h1>
+
+    <div class="row" id="auction-items">
+        <!-- Medical items with buttons and spinners will be displayed here -->
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const auctionItemsContainer = document.getElementById("auction-items");
+
+        // Predefined medical items
+        const medicalItems = [
+            { name: "CRICKET BAT",        image: "https://tse3.mm.bing.net/th?id=OIP.FfEP-JnC1FYh8Y8BBdTYCgHaEK&pid=Api&P=0&h=180" },
+            { name: "CRICKET BALL",           image: "https://tse2.mm.bing.net/th?id=OIP.bwnv1lzHvrMOwNABYZ_oqwHaF9&pid=Api&P=0&h=180" },
+            { name: "wicket keeping gloves",         image: "https://m.media-amazon.com/images/I/41icYSLxfNL._SY300_SX300_QL70_FMwebp_.jpg" },
+            { name: "RUNNING SHOES",           image: "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1560370119-on-cloudsurfer-womens-0305-1551983727.jpg?crop=0.798xw:0.673xh;0.147xw,0.171xh" },
+            { name: "FOOTBALL",          image: "https://tse3.mm.bing.net/th?id=OIP.XQYZmReY7MAx6GXdvrvlXgHaE8&pid=Api&P=0&h=180" },
+            { name: "Squash Racket",           image: "https://tse3.mm.bing.net/th?id=OIP.WrhrJ9DN4V2Nd_9TCKFYlgHaE8&pid=Api&P=0&h=180" },
+            { name: "TABLE TENNIS RACKET",       image: "https://1.bp.blogspot.com/-dtKOKEPs7Vo/XuIBlpdD0bI/AAAAAAAAYlM/uLpZM2a4YEUkQvfHUlxn08DX8o2-E0AngCK4BGAsYHg/s1500/71cM-ophirL._SL1500_.jpg" },
+            { name: "TABLE TENNIS BALLS",  image: "https://images.sportsdirect.com/images/imgzoom/77/77703312_xxl_a1.jpg" },
+            { name: "TABLE TENNIS TABLE",         image: "https://www.affordablett.com.au/shop/images/D99-5.jpg" },
+            { name: "BASKETBALL",         image: "https://tse1.mm.bing.net/th?id=OIP.cZiWHDtmY-seAughx83oUgHaEK&pid=Api&P=0&h=180" },
+            { name: "VOLLEYBALL",  image: "https://tse3.mm.bing.net/th?id=OIP.t9PvHc9k6pSuWU-NOJtWuwHaEo&pid=Api&P=0&h=180" },
+            { name: "TENNIS RACKET",     image: "https://tse3.mm.bing.net/th?id=OIP.B0OIcawTGPsdT_CWlZqLQwHaDt&pid=Api&P=0&h=180" },
+            { name: "TENNIS BALL",     image: "https://tse3.mm.bing.net/th?id=OIP.jaLL7pfCMjtbrh9di70qNQHaE7&pid=Api&P=0&h=180" },
+            { name: "CARROM",     image: "https://images.freekaamaal.com/post_images/1599220357.jpg" },
+            { name: "CHESS",     image: "https://usercontent1.hubstatic.com/13091390_f520.jpg" },
+            { name: "BADMINTON RACKET",     image: "https://tse1.mm.bing.net/th?id=OIP.LFRdU8D-4HluYl_cCl28lgHaFQ&pid=Api&P=0&h=180" },
+            { name: "SHUTTLE COCK",     image: "https://assetscdn1.paytm.com/images/catalog/product/S/SP/SPOSUNLEY-K-10-SART6291304E4E9D5C/1562055707084_0..jpg" },
+            { name: "SKIPPING ROPE",     image: "https://images-na.ssl-images-amazon.com/images/I/51MCwqdu-NL._AC_SL1001_.jpg" },
+            { name: "BILLIARDS STICK",     image: "https://tse2.mm.bing.net/th?id=OIP.p8_MIv06g4ACyBMV9ZTLBQHaFj&pid=Api&P=0&h=180" },
+            { name: "BOXING GLOVES",     image: "https://tse1.mm.bing.net/th?id=OIP.RDjtjjZupneZsVMqTPwLHwHaEM&pid=Api&P=0&h=180" },
+
+            
+
+
+
+            // Add more medical items as needed
+        ];
+
+        // Create cards with buttons and spinners for each medical item
+        medicalItems.forEach(item => {
+            const medicalCard = document.createElement("div");
+            medicalCard.classList.add("card");
+            medicalCard.innerHTML = `
+                <img src="${item.image}" class="card-img-top" alt="${item.name}">
+                <div class="card-body">
+                    <h5 class="card-title">${item.name}</h5>
+                    <button class="btn btn-primary" onclick="placeBid('${item.name}')">Place Bid</button>
+                    <div class="spinner-border text-primary" role="status" style="display: none;">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            `;
+
+            auctionItemsContainer.appendChild(medicalCard);
+        });
+    });
+
+    function placeBid(itemName) {
+        const cards = document.getElementsByClassName("card");
+        for (let i = 0; i < cards.length; i++) {
+            if (cards[i].querySelector('.card-title').textContent === itemName) {
+                const spinner = cards[i].querySelector('.spinner-border');
+                spinner.style.display = "inline-block";
+
+                // Simulating a bid placement process with a delay
+                setTimeout(function() {
+                    spinner.style.display = "none";
+                    alert(`You placed a bid for ${itemName} successfully!`);
+                }, 2000); // Simulating 2 seconds delay for the bid process (adjust as needed)
+                break;
+            }
+        }
+    }
+  </script>
+</body>
+</html>

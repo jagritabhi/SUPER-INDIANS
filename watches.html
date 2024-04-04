@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Auction Website - Watches Section</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+        background-image: url(watches\ bg.jpg);
+      padding-top: 20px;
+    }
+    h1 {
+        border:2px solid black;
+      text-align: center;
+      margin-bottom: 30px;
+      background-color: pink;
+    }
+    .watch-item {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .watch-item img {
+      width: 200px;
+      height: auto;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .description {
+      display: none;
+      margin-top: 10px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+    .message {
+      margin-top: 10px;
+      font-weight: bold;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Watches Section</h1>
+    <div class="row">
+      <!-- Watch 1 -->
+      <div class="col-md-4 watch-item">
+        <img src="tt.jpg" alt="Watch 1" class="img-fluid" onclick="showDescription('description1')">
+        <p id="description1" class="description">Description of Watch 1</p>
+        <form onsubmit="confirmBid(event, 150, 'message1')">
+          <div class="form-group">
+            <label for="bidAmount1">Bid Amount (Minimum bid: $150):</label>
+            <input type="number" class="form-control" id="bidAmount1" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message1" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 2 -->
+      <div class="col-md-4 watch-item">
+        <img src="casio.jpg" alt="Watch 2" class="img-fluid" onclick="showDescription('description2')">
+        <p id="description2" class="description">Description of Watch 2</p>
+        <form onsubmit="confirmBid(event, 200, 'message2')">
+          <div class="form-group">
+            <label for="bidAmount2">Bid Amount (Minimum bid: $200):</label>
+            <input type="number" class="form-control" id="bidAmount2" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message2" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 3 -->
+      <div class="col-md-4 watch-item">
+        <img src="guess.jpg" alt="Watch 3" class="img-fluid" onclick="showDescription('description3')">
+        <p id="description3" class="description">Description of Watch 3</p>
+        <form onsubmit="confirmBid(event, 250, 'message3')">
+          <div class="form-group">
+            <label for="bidAmount3">Bid Amount (Minimum bid: $250):</label>
+            <input type="number" class="form-control" id="bidAmount3" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message3" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 4 -->
+      <div class="col-md-4 watch-item">
+        <img src="6345t.jpg" alt="Watch 4" class="img-fluid" onclick="showDescription('description4')">
+        <p id="description4" class="description">Description of Watch 4</p>
+        <form onsubmit="confirmBid(event, 300, 'message4')">
+          <div class="form-group">
+            <label for="bidAmount4">Bid Amount (Minimum bid: $300):</label>
+            <input type="number" class="form-control" id="bidAmount4" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message4" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 5 -->
+      <div class="col-md-4 watch-item">
+        <img src="fossil.jpg" alt="Watch 5" class="img-fluid" onclick="showDescription('description5')">
+        <p id="description5" class="description">Description of Watch 5</p>
+        <form onsubmit="confirmBid(event, 350, 'message5')">
+          <div class="form-group">
+            <label for="bidAmount5">Bid Amount (Minimum bid: $350):</label>
+            <input type="number" class="form-control" id="bidAmount5" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message5" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 6 -->
+      <div class="col-md-4 watch-item">
+        <img src="spiky.jpg" alt="Watch 6" class="img-fluid" onclick="showDescription('description6')">
+        <p id="description6" class="description">Description of Watch 6</p>
+        <form onsubmit="confirmBid(event, 400, 'message6')">
+          <div class="form-group">
+            <label for="bidAmount6">Bid Amount (Minimum bid: $400):</label>
+            <input type="number" class="form-control" id="bidAmount6" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message6" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 7 -->
+      <div class="col-md-4 watch-item">
+        <img src="fw.jpg" alt="Watch 7" class="img-fluid" onclick="showDescription('description7')">
+        <p id="description7" class="description">Description of Watch 7</p>
+        <form onsubmit="confirmBid(event, 450, 'message7')">
+          <div class="form-group">
+            <label for="bidAmount7">Bid Amount (Minimum bid: $450):</label>
+            <input type="number" class="form-control" id="bidAmount7" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message7" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 8 -->
+      <div class="col-md-4 watch-item">
+        <img src="tommy h.jpg" alt="Watch 8" class="img-fluid" onclick="showDescription('description8')">
+        <p id="description8" class="description">Description of Watch 8</p>
+        <form onsubmit="confirmBid(event, 500, 'message8')">
+          <div class="form-group">
+            <label for="bidAmount8">Bid Amount (Minimum bid: $500):</label>
+            <input type="number" class="form-control" id="bidAmount8" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message8" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 9 -->
+      <div class="col-md-4 watch-item">
+        <img src="diesel.jpg" alt="Watch 9" class="img-fluid" onclick="showDescription('description9')">
+        <p id="description9" class="description">Description of Watch 9</p>
+        <form onsubmit="confirmBid(event, 550, 'message9')">
+          <div class="form-group">
+            <label for="bidAmount9">Bid Amount (Minimum bid: $550):</label>
+            <input type="number" class="form-control" id="bidAmount9" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message9" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 10 -->
+      <div class="col-md-4 watch-item">
+        <img src="Ck.jpg" alt="Watch 10" class="img-fluid" onclick="showDescription('description10')">
+        <p id="description10" class="description">Description of Watch 10</p>
+        <form onsubmit="confirmBid(event, 600, 'message10')">
+          <div class="form-group">
+            <label for="bidAmount10">Bid Amount (Minimum bid: $600):</label>
+            <input type="number" class="form-control" id="bidAmount10" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message10" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 11 -->
+      <div class="col-md-4 watch-item">
+        <img src="44m.jpg" alt="Watch 11" class="img-fluid" onclick="showDescription('description11')">
+        <p id="description11" class="description">Description of Watch 11</p>
+        <form onsubmit="confirmBid(event, 650, 'message11')">
+          <div class="form-group">
+            <label for="bidAmount11">Bid Amount (Minimum bid: $650):</label>
+            <input type="number" class="form-control" id="bidAmount11" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message11" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 12 -->
+      <div class="col-md-4 watch-item">
+        <img src="wl.jpg" alt="Watch 12" class="img-fluid" onclick="showDescription('description12')">
+        <p id="description12" class="description">Description of Watch 12</p>
+        <form onsubmit="confirmBid(event, 700, 'message12')">
+          <div class="form-group">
+            <label for="bidAmount12">Bid Amount (Minimum bid: $700):</label>
+            <input type="number" class="form-control" id="bidAmount12" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message12" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 13 -->
+      <div class="col-md-4 watch-item">
+        <img src="groden.jpg" alt="Watch 13" class="img-fluid" onclick="showDescription('description13')">
+        <p id="description13" class="description">Description of Watch 13</p>
+        <form onsubmit="confirmBid(event, 750, 'message13')">
+          <div class="form-group">
+            <label for="bidAmount13">Bid Amount (Minimum bid: $750):</label>
+            <input type="number" class="form-control" id="bidAmount13" placeholder="Enter bid amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message13" class="message"></p>
+        </form>
+      </div>
+      <!-- Watch 14 -->
+      <div class="col-md-4 watch-item">
+        <img src="ft.jpg" alt="Watch 14" class="img-fluid" onclick="showDescription('description14')">
+        <p id="description14" class="description">Description of Watch 14</p>
+        <form onsubmit="confirmBid(event, 800, 'message14')">
+          <div class="form-group">
+            <label for="bidAmount14">Bid Amount (Minimum bid: $800):</label>
+            <input type="number" class="form-control" id="bidAmount14" placeholder="Enter Bid Amount" required>
+            <div>
+                <button type="submit" class="btn btn-primary">Place Bid</button>
+          <p id="message14" class="message"></p>
+        </form>
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    function showDescription(descriptionId) {
+      var description = document.getElementById(descriptionId);
+      if (description.style.display === "none") {
+        description.style.display = "block";
+      } else {
+        description.style.display = "none";
+      }
+    }
+
+    function confirmBid(event, basePrice, messageElementId) {
+      event.preventDefault();
+      var bidAmount = parseFloat(document.getElementById(messageElementId.replace('message', 'bidAmount')).value);
+      var message = document.getElementById(messageElementId);
+
+      if (bidAmount < basePrice) {
+        message.innerText = "Bid amount must be at least the base price ($" + basePrice + ").";
+        return;
+      }
+
+      if (confirm("Are you sure you want to place a bid for $" + bidAmount + "?")) {
+        window.location.href = 'CHECKOUT.html';
+      } else {
+        message.innerText = "Bid canceled.";
+      }
+    }
+  </script>
+</body>
+</html>
