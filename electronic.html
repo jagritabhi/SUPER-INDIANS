@@ -33,41 +33,56 @@
         </div>
         <button type="submit" class="btn btn-primary">Add Item</button>
       </form>
+      <div class="mt-2" id="successMessage" style="display: none;">
+        <div class="alert alert-success" role="alert">
+          Item added successfully!
+        </div>
+      </div>
     </div>
   </div>
 
-  <script>document.addEventListener("DOMContentLoaded", function() {
-    const auctionItemsContainer = document.getElementById("auction-items");
-    const addItemForm = document.getElementById("addItemForm");
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const auctionItemsContainer = document.getElementById("auction-items");
+      const addItemForm = document.getElementById("addItemForm");
+      const successMessage = document.getElementById("successMessage");
 
-    addItemForm.addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent the form from submitting
+      addItemForm.addEventListener("submit", function(event) {
+          event.preventDefault(); // Prevent the form from submitting
 
-        const itemName = document.getElementById("itemName").value;
-        const itemBid = document.getElementById("itemBid").value;
-        const itemImage = document.getElementById("itemImage").value;
+          const itemName = document.getElementById("itemName").value;
+          const itemBid = document.getElementById("itemBid").value;
+          const itemImage = document.getElementById("itemImage").value;
 
-        if (itemName && itemBid && itemImage) {
-            const itemCard = `
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <img src="${itemImage}" class="card-img-top" alt="${itemName}">
-                    <div class="card-body">
-                        <h5 class="card-title">${itemName}</h5>
-                        <p class="card-text">Starting Bid: $${itemBid}</p>
-                    </div>
-                </div>
-            </div>
-            `;
-            auctionItemsContainer.insertAdjacentHTML('beforeend', itemCard);
+          if (itemName && itemBid && itemImage) {
+              const itemCard = `
+              <div class="col-md-4 mb-3">
+                  <div class="card">
+                      <img src="${itemImage}" class="card-img-top" alt="${itemName}">
+                      <div class="card-body">
+                          <h5 class="card-title">${itemName}</h5>
+                          <p class="card-text">Starting Bid: $${itemBid}</p>
+                      </div>
+                  </div>
+              </div>
+              `;
+              auctionItemsContainer.insertAdjacentHTML('beforeend', itemCard);
 
-            // Clear form fields after adding item
-            addItemForm.reset();
-        } else {
-            alert("Please fill out all fields.");
-        }
+              // Show success message
+              successMessage.style.display = "block";
+
+              // Clear form fields after adding item
+              addItemForm.reset();
+
+              // Hide success message after 3 seconds
+              setTimeout(function() {
+                  successMessage.style.display = "none";
+              }, 3000);
+          } else {
+              alert("Please fill out all fields.");
+          }
+      });
     });
-});
-</script>
+  </script>
 </body>
 </html>
