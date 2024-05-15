@@ -53,6 +53,17 @@
           const itemName = document.getElementById("itemName").value;
           const itemBid = document.getElementById("itemBid").value;
           const itemImage = document.getElementById("itemImage").value;
+          if (itemName && !isNaN(itemBid) && itemImage) {
+    // ... rest of the code for adding item card
+  } else {
+    let errorMessage = "Please fill out all fields. ";
+    if (isNaN(itemBid)) {
+      errorMessage += "Starting bid must be a number.";
+    }
+    alert(errorMessage);
+  }
+});
+Use code with
 
           if (itemName && itemBid && itemImage) {
               const itemCard = `
