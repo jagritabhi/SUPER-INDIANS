@@ -6,8 +6,16 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Custom styles */
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Page</title>
+    <style>
+        /* Custom styles */
         body {
-            background-image: url(https://1.bp.blogspot.com/_RphxnciltFY/THKoXMkjTLI/AAAAAAAAAMk/tOgMgW1zyko/s1600/Frame+cantik+02.jpg);
+            background-image: url('https://www.transparenttextures.com/patterns/symphony.png');
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
@@ -15,51 +23,72 @@
         h1 {
             text-align: center;
             margin-bottom: 30px;
-            color: #333;
+            color: #fff;
+            background: linear-gradient(to right, #ff7300, #ff1c68);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .card {
             margin: 10px;
             width: 250px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease-in-out;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
         }
         .card:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(3deg);
         }
         .card-img-top {
             height: 150px;
             object-fit: cover;
         }
         .card-body {
-            padding: 15px;
+            padding: 20px;
             background-color: #fff;
         }
         .card-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             color: #333;
         }
         .btn {
-            width: 103%;
-            margin-top: 10px;
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 5px;
         }
         .btn-primary {
-            background-color: #ff7300;
-            border-color: #007bff;
+            background-color: #ff1c68;
+            border: none;
         }
         .btn-primary:hover {
-            background-color: #b3001b;
-            border-color: #0056b3;
+            background-color: #ff7300;
         }
         .spinner-border {
             margin-top: 20px;
         }
-        .container h1{
-            background-color: rgb(240, 127, 96);
-        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Styled Page</h1>
+    <div class="card">
+        <img src="https://via.placeholder.com/250x150" alt="Card image" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title">Card Title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+</body>
+</html>
+
     </style>
 </head>
 <body>
