@@ -16,9 +16,6 @@ Payment and Delivery: The winning bidder is required to make payment for the ite
 
 Feedback and Ratings: Both buyers and sellers may leave feedback and ratings for each other based on their experience with the transaction. This helps establish trust within the community and provides valuable information for future transactions.
 
-Customer Support: The auction website typically provides customer support to assist users with any issues or concerns they may encounter during the buying or selling process.
-
-Security Measures: To ensure the safety and security of users' transactions and personal information, auction websites employ various security measures such as encryption, secure payment gateways, and verification processes.
 
 Overall, auction websites provide a convenient and accessible platform for individuals and businesses to engage in buying and selling goods or services through an open and competitive bidding process.
 
